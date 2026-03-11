@@ -1,0 +1,50 @@
+# Build results
+**/bin/
+**/obj/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vcxproj.user
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# Dotnet tool state
+.dotnet/
+
+# Logs
+*.log
+
+# Test results
+TestResults/
+
+# Docker
+**/docker-compose.override.yml
+
+# Secrets
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.Development.json
+
+# EF Core
+**/Migrations/
