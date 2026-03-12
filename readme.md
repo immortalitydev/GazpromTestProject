@@ -36,7 +36,6 @@
 8. Docker Compose для PostgreSQL
 ## Запуск
    1. Docker: docker compose up --build
-   2. dotnet run --project src/Web/Web.csproj
 ## Возможные улучшения
 1. Добавить авторизацию и аутентификацию пользователей
 2. Перейти от исключений для обработки ошибок к Result паттерну
