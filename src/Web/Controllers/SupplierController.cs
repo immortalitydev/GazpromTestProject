@@ -5,22 +5,15 @@ namespace Web.Controllers;
 
 [ApiController]
 [Route("api/suppliers/[action]")]
-public sealed class SupplierController : ControllerBase
+public sealed class SupplierController(ISupplierService supplierService) : ControllerBase
 {
-    private readonly ISupplierService _supplierService;
-
-    public SupplierController(ISupplierService supplierService)
-    {
-        _supplierService = supplierService;
-    }
-
     [HttpGet("top")]
-    public async Task<ActionResult<IReadOnlyList<SupplierDto>>> GetTopSuppliers(
+    public async Task<ActionResult<IReadOnlyList<SupplierDto>>> GetTopSuppliersAsync(
         [FromQuery] int count,
         CancellationToken cancellationToken)
     {
         var normalizedCount = count <= 0 ? 3 : count;
-        var suppliers = await _supplierService.GetTopSuppliersAsync(normalizedCount, cancellationToken);
+        var suppliers = await supplierService.GetTopSuppliersAsync(normalizedCount, cancellationToken);
         return Ok(suppliers);
     }
 }

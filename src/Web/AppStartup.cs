@@ -7,6 +7,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Web.Middlewares;
 
 namespace Web;
 
@@ -15,15 +16,12 @@ public static class AppStartup
     public static void ConfigureServices(WebApplicationBuilder builder)
     {
         builder.Services.AddControllers();
-        
+
         builder.Services.AddFluentValidationAutoValidation()
             .AddValidatorsFromAssemblyContaining<CreateOfferRequestValidator>();
-        
-        builder.Services.AddFluentValidationAutoValidation()
-            .AddValidatorsFromAssemblyContaining<OfferSearchRequestValidator>();
-        
+
         builder.Services.AddEndpointsApiExplorer();
-        
+
         builder.Services.AddSwaggerGen();
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -43,6 +41,14 @@ public static class AppStartup
 
     public static void ConfigurePipeline(WebApplication app)
     {
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<GazpromTestTaskDbContext>();
+            db.Database.Migrate();
+        }
+
+        app.UseExceptionHandling();
+
         app.UseSwagger();
         app.UseSwaggerUI();
 

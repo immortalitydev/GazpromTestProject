@@ -1,25 +1,19 @@
 using Application.Offers;
+using Application.Offers.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers;
 
 [ApiController]
 [Route("api/offers/[action]")]
-public sealed class OfferController : ControllerBase
+public sealed class OfferController(IOfferService offerService) : ControllerBase
 {
-    private readonly IOfferService _offerService;
-
-    public OfferController(IOfferService offerService)
-    {
-        _offerService = offerService;
-    }
-
     [HttpGet]
     public async Task<ActionResult<OfferSearchResponse>> SearchAsync(
         [FromQuery] OfferSearchRequest request,
         CancellationToken cancellationToken)
     {
-        var response = await _offerService.SearchAsync(request, cancellationToken);
+        var response = await offerService.SearchAsync(request, cancellationToken);
         return Ok(response);
     }
 
@@ -30,7 +24,7 @@ public sealed class OfferController : ControllerBase
     {
         try
         {
-            var created = await _offerService.CreateAsync(request, cancellationToken);
+            var created = await offerService.CreateAsync(request, cancellationToken);
             return Ok(created);
         }
         catch (ArgumentException ex)

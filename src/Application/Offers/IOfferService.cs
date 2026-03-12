@@ -1,3 +1,5 @@
+using Application.Offers.Dtos;
+
 namespace Application.Offers;
 
 public interface IOfferService

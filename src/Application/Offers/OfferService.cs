@@ -1,3 +1,4 @@
+using Application.Offers.Dtos;
 using Application.Offers.Validation;
 using Application.Repositories;
 using Domain.Entities;
@@ -55,7 +56,6 @@ public sealed class OfferService(
 
     public async Task<OfferSearchResponse> SearchAsync(OfferSearchRequest request, CancellationToken cancellationToken)
     {
-        // Валидация
         var validationResult = await offerSearchRequestValidator.ValidateAsync(request, cancellationToken);
         if (!validationResult.IsValid)
         {
